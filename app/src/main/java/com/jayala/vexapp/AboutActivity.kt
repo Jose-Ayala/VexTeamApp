@@ -12,19 +12,38 @@ class AboutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Ensure this line uses ActivityAboutBinding
         binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // This reference should now turn purple/resolve
+        // Dynamically get version name from build.gradle
+        val versionName = try {
+            packageManager.getPackageInfo(packageName, 0).versionName
+        } catch (_: Exception) {
+            "1.0"
+        }
+        binding.appVersion.text = getString(R.string.version, versionName)
+
         binding.backButton.setOnClickListener {
             finish()
         }
 
+        // Privacy Policy Link
         binding.privacyPolicyButton.setOnClickListener {
             val url = "https://github.com/Jose-Ayala/VexTeamAPP/blob/main/PRIVACY_POLICY.md"
-            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-            startActivity(intent)
+            startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+        }
+
+        // Contact Support Email Intent
+        binding.contactButton.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                data = "mailto:jayala4145@gmail.com".toUri()
+                putExtra(Intent.EXTRA_SUBJECT, "VEX Team App Support - v$versionName")
+            }
+            try {
+                startActivity(Intent.createChooser(emailIntent, "Send Email Support..."))
+            } catch (_: Exception) {
+                // Handle case where no email app is installed
+            }
         }
     }
 }
