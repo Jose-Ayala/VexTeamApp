@@ -2,7 +2,7 @@ package com.jayala.vexapp
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.jayala.vexapp.databinding.ActivitySkillsBinding
@@ -17,28 +17,32 @@ class SkillsActivity : AppCompatActivity() {
         binding = ActivitySkillsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Get the ID from HomeActivity
         val teamId = intent.getIntExtra("TEAM_ID", -1)
 
         if (teamId != -1) {
             fetchSkillsData(teamId)
         } else {
-            Toast.makeText(this, "Error: No team ID found", Toast.LENGTH_SHORT).show()
+            // Using the string resource we added to the strings.xml
+            showError(getString(R.string.err_network))
         }
 
-        // Back Button Logic
         binding.backButton.setOnClickListener {
             finish()
+        }
+
+        binding.retryButton.setOnClickListener {
+            if (teamId != -1) fetchSkillsData(teamId)
         }
     }
 
     private fun fetchSkillsData(teamId: Int) {
         lifecycleScope.launch {
+            setLoading(true)
             try {
                 Log.d("VEX_DEBUG", "Fetching skills for Team ID: $teamId")
 
-                // Requesting seasons
-                val allSeasonIds = (189..202).toList()
+                // Updated range to include the current 2025-2026 and future seasons
+                val allSeasonIds = (180..215).toList()
                 val response = RetrofitClient.service.getTeamSkills(
                     teamId = teamId,
                     seasons = allSeasonIds
@@ -54,9 +58,9 @@ class SkillsActivity : AppCompatActivity() {
                     val uiModels = groupedByEvent.map { (key, entries) ->
                         val (eventName, seasonName) = key
 
-                        // Pair Driver and Programming scores for the same event
-                        val driver = entries.find { it.type == "driver" }?.score ?: 0
-                        val programming = entries.find { it.type == "programming" }?.score ?: 0
+                        // Use ignoreCase for professional string comparison
+                        val driver = entries.find { it.type.equals("driver", true) }?.score ?: 0
+                        val programming = entries.find { it.type.equals("programming", true) }?.score ?: 0
 
                         SkillsUiModel(
                             eventName = eventName,
@@ -65,20 +69,50 @@ class SkillsActivity : AppCompatActivity() {
                             programmingScore = programming,
                             totalScore = driver + programming
                         )
-                    }.reversed()
+                    }.reversed() // Kept your chronological order
 
-                    binding.skillsRecyclerView.adapter = SkillsAdapter(uiModels)
+                    updateUI(uiModels)
 
                     Log.d("VEX_DEBUG", "Successfully displayed ${uiModels.size} merged events")
 
                 } else {
                     Log.e("VEX_DEBUG", "API Error: ${response.code()}")
+                    showError(getString(R.string.err_network))
                 }
             } catch (e: Exception) {
                 Log.e("VEX_DEBUG", "Skills Fetch Failed", e)
-                Toast.makeText(applicationContext, "Error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                showError(getString(R.string.check_internet))
+            } finally {
+                setLoading(false)
             }
         }
+    }
+
+    private fun updateUI(models: List<SkillsUiModel>) {
+        if (models.isEmpty()) {
+            binding.skillsRecyclerView.visibility = View.GONE
+            binding.emptyStateText.visibility = View.VISIBLE
+        } else {
+            binding.skillsRecyclerView.visibility = View.VISIBLE
+            binding.emptyStateText.visibility = View.GONE
+            binding.skillsRecyclerView.adapter = SkillsAdapter(models)
+        }
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        if (isLoading) {
+            binding.errorLayout.visibility = View.GONE
+            binding.skillsRecyclerView.visibility = View.GONE
+            binding.emptyStateText.visibility = View.GONE
+        }
+    }
+
+    private fun showError(message: String) {
+        binding.errorLayout.visibility = View.VISIBLE
+        binding.errorText.text = message
+        binding.skillsRecyclerView.visibility = View.GONE
+        binding.emptyStateText.visibility = View.GONE
     }
 }
 

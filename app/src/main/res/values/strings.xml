@@ -31,4 +31,19 @@
     <string name="no_awards_found_for_this_team">No awards found for this team.</string>
     <string name="error_loading_data">Error loading data</string>
     <string name="retry">RETRY</string>
+    <string name="err_network">Connection error. Please try again.</string>
+    <string name="no_skills_scores_found">No skills scores found.</string>
+    <string name="check_internet">Please check your internet connection.</string>
+    <string name="skills_list_description">List of competition skills scores.</string>
+    <string name="awards_list_description">List of trophies and achievements won by the team.</string>
+    <string name="select_a_competition">Select a competition</string>
+    <string name="select_event_hint">Select an Event</string>
+    <string name="select_event_description">Dropdown menu to select a competition</string>
+    <string name="event_details_description">Competition event statistics and results</string>
+    <string name="event_stats_subtitle">Rankings and scores by tournament</string>
+    <string name="about_app">About &amp; Privacy</string>
+    <string name="app_version">Version 1.0.0</string>
+    <string name="developer_info">Developed by Jayala VEX Apps</string>
+    <string name="privacy_statement">This app uses the RobotEvents API to display public competition data. No personal user data is collected, stored, or shared.</string>
+    <string name="view_privacy_policy">View Full Privacy Policy</string>
 </resources>

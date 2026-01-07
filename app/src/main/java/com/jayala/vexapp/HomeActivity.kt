@@ -35,6 +35,11 @@ class HomeActivity : AppCompatActivity() {
             sharedPref.edit { remove("team_number") }
             navigateToMain()
         }
+
+        binding.aboutButton.setOnClickListener {
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupNavigation() {

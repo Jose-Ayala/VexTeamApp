@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#121212"
-    android:padding="16dp">
+    android:padding="24dp">
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/aboutTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/competition_details"
+        android:text="@string/about_app"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -21,57 +21,39 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/titleSubtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/event_stats_subtitle"
-        android:textColor="#ADB5BD"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Spinner
-        android:id="@+id/competitionDropdown"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="70dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/spinner_bg"
-        android:contentDescription="@string/select_event_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleSubtitle" />
-
-    <ScrollView
-        android:id="@+id/contentScroll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/event_details_description"
-        app:layout_constraintBottom_toTopOf="@id/backButton"
-        app:layout_constraintTop_toBottomOf="@id/competitionDropdown">
-
-        <LinearLayout
-            android:id="@+id/detailsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="8dp" />
-    </ScrollView>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/appVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:indeterminateTint="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@id/backButton"
+        android:layout_marginTop="8dp"
+        android:text="@string/app_version"
+        android:textColor="#ADB5BD"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aboutTitle" />
+
+    <TextView
+        android:id="@+id/privacyDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/privacy_statement"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/competitionDropdown" />
+        app:layout_constraintTop_toBottomOf="@id/appVersion" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/privacyPolicyButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/view_privacy_policy"
+        android:textColor="#BB86FC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/privacyDescription" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/backButton"
