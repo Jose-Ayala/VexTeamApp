@@ -16,10 +16,9 @@ class AwardsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAwardsBinding
 
-    // Move constants to a companion object for easier maintenance
     companion object {
         private const val START_DATE = "2023-08-01T00:00:00Z"
-        private val SEASON_IDS = (181..210).toList() // Expanded range for future seasons
+        private val SEASON_IDS = (181..210).toList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +26,13 @@ class AwardsActivity : AppCompatActivity() {
         binding = ActivityAwardsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val sharedPref = getSharedPreferences("VexPrefs", MODE_PRIVATE)
+        val teamId = sharedPref.getInt("team_id", -1)
+        val teamName = sharedPref.getString("team_full_name", "Team Info")
+        binding.teamName.text = teamName
+
         setupUI()
 
-        val teamId = intent.getIntExtra("TEAM_ID", -1)
         if (teamId != -1) {
             fetchAwardsData(teamId)
         } else {
@@ -48,7 +51,6 @@ class AwardsActivity : AppCompatActivity() {
 
     private fun fetchAwardsData(teamId: Int) {
         lifecycleScope.launch {
-            // 1. Enter Loading State
             setLoading(true)
 
             try {
@@ -79,7 +81,6 @@ class AwardsActivity : AppCompatActivity() {
         return awards.map { award ->
             val rawDate = eventDateMap[award.event?.id] ?: ""
 
-            // Professional Cleaning: Remove content in parentheses like "(WC)" or "(Middle School)"
             val cleanedTitle = award.title.replace(Regex("\\(.*?\\)"), "").trim()
 
             AwardUiModel(
@@ -94,7 +95,6 @@ class AwardsActivity : AppCompatActivity() {
     private fun formatIsoDate(isoString: String): String {
         return try {
             if (isoString.isEmpty()) return "TBD"
-            // Using java.time for professional, locale-aware formatting
             val parsed = ZonedDateTime.parse(isoString)
             parsed.format(DateTimeFormatter.ofPattern("MM/dd/yy", Locale.US))
         } catch (_: Exception) {
@@ -103,15 +103,33 @@ class AwardsActivity : AppCompatActivity() {
     }
 
     private fun updateUI(models: List<AwardUiModel>) {
+        val awardCount = models.size
+        val subtitleText = getString(R.string.trophies_and_achievements_count, awardCount)
+
+        val spannableSubtitle = android.text.SpannableString(subtitleText)
+
+        val startIndex = subtitleText.indexOf("(")
+
+        if (startIndex != -1) {
+            spannableSubtitle.setSpan(
+                android.text.style.ForegroundColorSpan(
+                    androidx.core.content.ContextCompat.getColor(this, R.color.accent_gold)
+                ),
+                startIndex,
+                subtitleText.length,
+                android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
         if (models.isEmpty()) {
             binding.awardsRecyclerView.visibility = View.GONE
-            binding.emptyStateText.visibility = View.VISIBLE // Professional empty state
-            binding.awardsSubtitle.text = getString(R.string.trophies_and_achievements_count, 0)
+            binding.emptyStateText.visibility = View.VISIBLE
+            binding.awardsSubtitle.text = spannableSubtitle
         } else {
             binding.awardsRecyclerView.visibility = View.VISIBLE
             binding.emptyStateText.visibility = View.GONE
             binding.awardsRecyclerView.adapter = AwardsAdapter(models)
-            binding.awardsSubtitle.text = getString(R.string.trophies_and_achievements_count, models.size)
+            binding.awardsSubtitle.text = spannableSubtitle
         }
     }
 

@@ -11,6 +11,7 @@
     android:textColor="#FFFFFF"
     android:background="#121212"
     android:checkMark="?android:attr/listChoiceIndicatorSingle"
+    android:checkMarkTint="#00D2FF"
     android:textSize="16sp"
     android:singleLine="false"
     android:maxLines="8"

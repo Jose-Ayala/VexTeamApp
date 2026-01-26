@@ -17,12 +17,14 @@ class SkillsActivity : AppCompatActivity() {
         binding = ActivitySkillsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val teamId = intent.getIntExtra("TEAM_ID", -1)
+        val sharedPref = getSharedPreferences("VexPrefs", MODE_PRIVATE)
+        val teamId = sharedPref.getInt("team_id", -1)
+        val teamName = sharedPref.getString("team_full_name", "Team Info")
+        binding.teamName.text = teamName
 
         if (teamId != -1) {
             fetchSkillsData(teamId)
         } else {
-            // Using the string resource we added to the strings.xml
             showError(getString(R.string.err_network))
         }
 
@@ -41,7 +43,6 @@ class SkillsActivity : AppCompatActivity() {
             try {
                 Log.d("VEX_DEBUG", "Fetching skills for Team ID: $teamId")
 
-                // Updated range to include the current 2025-2026 and future seasons
                 val allSeasonIds = (180..215).toList()
                 val response = RetrofitClient.service.getTeamSkills(
                     teamId = teamId,
@@ -58,18 +59,19 @@ class SkillsActivity : AppCompatActivity() {
                     val uiModels = groupedByEvent.map { (key, entries) ->
                         val (eventName, seasonName) = key
 
-                        // Use ignoreCase for professional string comparison
                         val driver = entries.find { it.type.equals("driver", true) }?.score ?: 0
                         val programming = entries.find { it.type.equals("programming", true) }?.score ?: 0
+                        val rank = entries.firstOrNull()?.rank ?: 0
 
                         SkillsUiModel(
                             eventName = eventName,
                             seasonName = seasonName,
                             driverScore = driver,
                             programmingScore = programming,
-                            totalScore = driver + programming
+                            totalScore = driver + programming,
+                            rank = rank
                         )
-                    }.reversed() // Kept your chronological order
+                    }.reversed()
 
                     updateUI(uiModels)
 
@@ -121,5 +123,6 @@ data class SkillsUiModel(
     val seasonName: String,
     val driverScore: Int,
     val programmingScore: Int,
-    val totalScore: Int
+    val totalScore: Int,
+    val rank: Int
 )

@@ -5,116 +5,362 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212529"
-    android:padding="24dp"
-    tools:context=".HomeActivity">
+    android:background="@color/bg_dark"
+    android:padding="20dp">
 
-    <TextView
-        android:id="@+id/teamName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:textColor="#ffffff"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1234A Team Name" />
-
-    <TextView
-        android:id="@+id/programName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/teamName"
-        tools:text="VRC High School" />
-
-    <TextView
-        android:id="@+id/organization"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/programName"
-        tools:text="Organization Name" />
-
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="#adb5bd"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/organization"
-        tools:text="City, Region" />
-
-    <TextView
-        android:id="@+id/country"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textColor="#adb5bd"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/location"
-        tools:text="United States" />
-
-    <LinearLayout
-        android:id="@+id/buttonContainer"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/cardScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/country">
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/changeTeamButton">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/skillsButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <LinearLayout
+            android:id="@+id/buttonContainer"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/skills"
-            android:textColor="#ffffff"
-            app:strokeColor="#ffffff" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/competitionsButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/competitions"
-            android:textColor="#ffffff"
-            app:strokeColor="#ffffff" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/headerCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@color/surface_dark"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/divider_dark">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/awardsButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="@string/awards"
-            android:textColor="#ffffff"
-            app:strokeColor="#ffffff" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:padding="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/teamName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_high_emphasis"
+                        android:textSize="28sp"
+                        android:fontFamily="sans-serif-black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="550X - XAWG" />
+
+                    <TextView
+                        android:id="@+id/programName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/cyber_blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        app:layout_constraintTop_toBottomOf="@id/teamName"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="V5RC - VEX V5 ROBOTICS COMPETITION" />
+
+                    <View
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/divider_dark"
+                        app:layout_constraintTop_toBottomOf="@id/programName" />
+
+                    <TextView
+                        android:id="@+id/organization"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/text_high_emphasis"
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toBottomOf="@id/divider"
+                        tools:text="APOPKA HIGH" />
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/text_medium_emphasis"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/organization"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="Apopka, Florida United States" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/skillsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/surface_dark"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/divider_dark">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/skillsIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_skills"
+                        app:tint="@color/icon_skills"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/skillsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/skills"
+                        android:textColor="@color/text_high_emphasis"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/skillsIcon"
+                        app:layout_constraintTop_toTopOf="@id/skillsIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/skillsIcon" />
+
+                    <ImageView
+                        android:id="@+id/skillsChevron"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/text_medium_emphasis"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/skillsIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/skillsIcon" />
+
+                    <TextView
+                        android:id="@+id/skillsSeasonBest"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/season_best"
+                        android:textColor="@color/text_high_emphasis"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/skillsTitle"
+                        app:layout_constraintTop_toBottomOf="@id/skillsTitle" />
+
+                    <TextView
+                        android:id="@+id/skillsBreakdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/driver_0_programming_0"
+                        android:textColor="@color/text_medium_emphasis"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="@id/skillsSeasonBest"
+                        app:layout_constraintTop_toBottomOf="@id/skillsSeasonBest" />
+
+                    <TextView
+                        android:id="@+id/skillsRank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/skills_rank_green"
+                        android:textSize="13sp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/skillsBreakdown"
+                        app:layout_constraintTop_toBottomOf="@id/skillsBreakdown"
+                        tools:text="Rank: 6"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/competitionsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/surface_dark"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/divider_dark">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/compIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_calendar"
+                        app:tint="@color/icon_events"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/competitionsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/competitions"
+                        android:textColor="@color/text_high_emphasis"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/compIcon"
+                        app:layout_constraintTop_toTopOf="@id/compIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/compIcon" />
+
+                    <ImageView
+                        android:id="@+id/compChevron"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/text_medium_emphasis"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/compIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/compIcon" />
+
+                    <TextView
+                        android:id="@+id/nextEventName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/no_upcoming_events"
+                        android:textColor="@color/text_high_emphasis"
+                        android:textSize="14sp"
+
+                        android:maxLines="3"
+                        android:ellipsize="none"
+
+                        app:layout_constraintStart_toStartOf="@id/competitionsTitle"
+                        app:layout_constraintEnd_toStartOf="@id/compChevron"
+                        app:layout_constraintTop_toBottomOf="@id/competitionsTitle" />
+
+                    <TextView
+                        android:id="@+id/competitionsSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/tap_to_view_events"
+                        android:textColor="@color/text_medium_emphasis"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="@id/nextEventName"
+                        app:layout_constraintTop_toBottomOf="@id/nextEventName" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/awardsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/surface_dark"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/divider_dark">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/awardIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_trophy"
+                        app:tint="@color/icon_awards"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/awardsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/awards"
+                        android:textColor="@color/text_high_emphasis"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/awardIcon"
+                        app:layout_constraintTop_toTopOf="@id/awardIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/awardIcon" />
+
+                    <TextView
+                        android:id="@+id/awardsSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/season_total_0"
+                        android:textColor="@color/accent_gold"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="@id/awardsTitle"
+                        app:layout_constraintTop_toBottomOf="@id/awardsTitle" />
+
+                    <TextView
+                        android:id="@+id/awardsFullList"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/no_awards_earned_yet"
+                        android:textColor="@color/text_medium_emphasis"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp"
+                        app:layout_constraintStart_toStartOf="@id/awardsTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/awardsSubtitle" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/text_medium_emphasis"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/awardIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/awardIcon"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/changeTeamButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/change_team"
-        android:textColor="#ffffff"
-        app:strokeColor="#ffffff"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="@color/cyber_blue"
+        app:cornerRadius="12dp"
         app:layout_constraintBottom_toTopOf="@id/aboutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -123,10 +369,9 @@
         android:id="@+id/aboutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:padding="8dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/about_app"
-        android:textColor="#ADB5BD"
+        android:textColor="@color/text_medium_emphasis"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -57,4 +57,9 @@ interface RobotEventsService {
         @Path("id") teamId: Int,
         @Query("per_page") perPage: Int = 250
     ): Response<CompEventResponse>
+
+    @GET("seasons")
+    suspend fun getSeasons(
+        @Query("active") active: Boolean = true
+    ): Response<SeasonResponse>
 }

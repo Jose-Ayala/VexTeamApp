@@ -27,14 +27,12 @@ class AboutActivity : AppCompatActivity() {
             finish()
         }
 
-        // Privacy Policy Link
-        binding.privacyPolicyButton.setOnClickListener {
-            val url = "https://github.com/Jose-Ayala/VexTeamAPP/blob/main/PRIVACY_POLICY.md"
+        binding.githubCard.setOnClickListener {
+            val url = "https://github.com/Jose-Ayala/VexTeamAPP"
             startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
         }
 
-        // Contact Support Email Intent
-        binding.contactButton.setOnClickListener {
+        binding.contactCard.setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
                 data = "mailto:jayala4145@gmail.com".toUri()
                 putExtra(Intent.EXTRA_SUBJECT, "VEX Team App Support - v$versionName")
@@ -44,6 +42,11 @@ class AboutActivity : AppCompatActivity() {
             } catch (_: Exception) {
                 // Handle case where no email app is installed
             }
+        }
+
+        binding.privacyCard.setOnClickListener {
+            val url = "https://github.com/Jose-Ayala/VexTeamAPP/blob/main/PRIVACY_POLICY.md"
+            startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
         }
     }
 }

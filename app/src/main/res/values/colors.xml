@@ -1,8 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="cyber_blue_variant">#0077C8</color>
+    <color name="bg_dark">#1A1C1E</color>
+    <color name="surface_dark">#2A2D31</color>
+    <color name="divider_dark">#3F4145</color>
+    <color name="text_high_emphasis">#E2E2E6</color>
+    <color name="text_medium_emphasis">#B0B0B4</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#0d6efd</color>
-    <color name="dark_bg">#212529</color>
-    <color name="text_white">#f8f9fa</color>
+    <color name="black">#FF000000</color>
+    <color name="cyber_blue">#00A3FF</color>
+    <color name="cyber_blue_muted">#1A365D</color>
+
+    <color name="icon_skills">#00A3FF</color>
+    <color name="icon_events">#4CAF50</color>
+    <color name="icon_awards">#FFC107</color>
+    <color name="accent_gold">#FFD54F</color>
+    <color name="status_green">#00E676</color>
+    <color name="skills_rank_green">#4CAF50</color>
 </resources>

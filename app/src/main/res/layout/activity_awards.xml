@@ -5,22 +5,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212529"
-    android:padding="16dp"
+    android:background="@color/bg_dark"
+    android:padding="20dp"
     tools:context=".AwardsActivity">
+
+    <TextView
+        android:id="@+id/teamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/cyber_blue"
+        android:textSize="28sp"
+        android:fontFamily="sans-serif-black"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="550X - XAWG" />
 
     <TextView
         android:id="@+id/awardsTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="4dp"
         android:text="@string/team_awards"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_high_emphasis"
         android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="sans-serif-black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/teamName" />
 
     <TextView
         android:id="@+id/awardsSubtitle"
@@ -28,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/trophies_and_achievements"
-        android:textColor="#ADB5BD"
+        android:textColor="@color/text_medium_emphasis"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/awardsTitle"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +51,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="@string/awards_list_description"
         android:clipToPadding="false"
         android:paddingBottom="16dp"
@@ -53,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:indeterminateTint="#FFFFFF"
+        android:indeterminateTint="@color/white"
         app:layout_constraintTop_toTopOf="@id/awardsRecyclerView"
         app:layout_constraintBottom_toBottomOf="@id/awardsRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_awards_found_for_this_team"
-        android:textColor="#ADB5BD"
+        android:textColor="@color/text_medium_emphasis"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/awardsRecyclerView"
         app:layout_constraintBottom_toBottomOf="@id/awardsRecyclerView"
@@ -90,26 +103,26 @@
             android:textColor="#FF5252"
             android:text="@string/error_loading_data" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/retryButton"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/retry"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/backButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="32dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/home"
-        android:textColor="#ffffff"
-        app:strokeColor="#ffffff"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="@color/cyber_blue"
+        app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

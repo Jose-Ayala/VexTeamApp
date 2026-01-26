@@ -1,8 +1,8 @@
 package com.jayala.vexapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
@@ -14,16 +14,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Check for saved data
-        val sharedPref = getSharedPreferences("VexPrefs", MODE_PRIVATE)
-        val savedTeam = sharedPref.getString("team_number", null)
+        super.onCreate(savedInstanceState)
 
-        if (savedTeam != null) {
+        val sharedPref = getSharedPreferences("VexPrefs", MODE_PRIVATE)
+
+        if (sharedPref.getInt("team_id", -1) != -1) {
             navigateToHome()
             return
         }
 
-        super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -31,14 +30,13 @@ class MainActivity : AppCompatActivity() {
             val teamInput = binding.teamNumberSearch.text.toString().trim().uppercase()
 
             if (validateFormat(teamInput)) {
-                verifyTeamExists(teamInput, sharedPref)
+                verifyTeamExists(teamInput)
             }
         }
     }
 
     private fun validateFormat(input: String): Boolean {
         val vexRegex = Regex("^[0-9A-Z]{2,10}$")
-
         return when {
             input.isEmpty() -> {
                 binding.teamNumberInputLayout.error = "Please enter a team number"
@@ -55,29 +53,59 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun verifyTeamExists(teamNumber: String, sharedPref: android.content.SharedPreferences) {
+    private fun verifyTeamExists(teamNumber: String) {
         lifecycleScope.launch {
             try {
+                binding.teamNumberInputLayout.error = null
+                binding.teamRecyclerView.visibility = View.GONE
+                binding.resultsLabel.visibility = View.GONE
+
                 binding.searchButton.isEnabled = false
-                binding.searchButton.text = "VERIFYING..."
+                binding.searchButton.text = getString(R.string.verifying)
 
                 val response = RetrofitClient.service.getTeamInfo(teamNumber = teamNumber)
 
-                if (response.isSuccessful && response.body()?.data?.isNotEmpty() == true) {
-                    sharedPref.edit { putString("team_number", teamNumber) }
-                    navigateToHome()
+                if (response.isSuccessful && response.body() != null) {
+                    val teams = response.body()!!.data
+
+                    when {
+                        teams.isEmpty() -> {
+                            binding.teamNumberInputLayout.error = "Team not found."
+                        }
+                        teams.size == 1 -> {
+                            saveAndNavigate(teams[0].id, teams[0].number)
+                        }
+                        else -> {
+                            setupTeamTable(teams)
+                        }
+                    }
                 } else {
-                    binding.teamNumberInputLayout.error = "Team not found, please enter a different team number."
+                    binding.teamNumberInputLayout.error = "API Error. Try again."
                 }
-            } catch (_: Exception) {
-                // ERROR: Network/Connection issue
-                binding.teamNumberInputLayout.error = "Connection error. Try again."
+            } catch (e: Exception) {
+                binding.teamNumberInputLayout.error = "Connection error."
             } finally {
                 binding.searchButton.isEnabled = true
                 binding.searchButton.text = "SEARCH"
             }
         }
+    }
+
+    private fun setupTeamTable(teams: List<TeamData>) {
+        binding.resultsLabel.visibility = View.VISIBLE
+        binding.teamRecyclerView.visibility = View.VISIBLE
+        binding.teamRecyclerView.adapter = TeamAdapter(teams) { selectedTeam ->
+            saveAndNavigate(selectedTeam.id, selectedTeam.number)
+        }
+    }
+
+    private fun saveAndNavigate(teamId: Int, teamNumber: String) {
+        val sharedPref = getSharedPreferences("VexPrefs", MODE_PRIVATE)
+        sharedPref.edit {
+            putInt("team_id", teamId)
+            putString("team_number", teamNumber)
+        }
+        navigateToHome()
     }
 
     private fun navigateToHome() {

@@ -22,8 +22,9 @@ class SkillsAdapter(private val skillsList: List<SkillsUiModel>) :
         holder.binding.apply {
             rowEventName.text = skill.eventName
             rowSeasonName.text = skill.seasonName
-            rowScoreBreakdown.text = "Driver: ${skill.driverScore} | Programming: ${skill.programmingScore}"
-            rowTotalScore.text = "Total: ${skill.totalScore}"
+            rowScoreBreakdown.text = "Driver: ${skill.driverScore} | Prog: ${skill.programmingScore}"
+            rowTotalScore.text = "${skill.totalScore}"
+            rowRank.text = if (skill.rank > 0) "Rank: ${skill.rank}" else "Rank: N/A"
         }
     }
 

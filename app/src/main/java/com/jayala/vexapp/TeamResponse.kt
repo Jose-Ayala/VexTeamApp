@@ -10,7 +10,8 @@ data class TeamData(
     val team_name: String,
     val organization: String,
     val location: LocationData,
-    val program: ProgramData
+    val program: ProgramData,
+    val grade: String?
 )
 
 data class LocationData(
@@ -20,6 +21,7 @@ data class LocationData(
 )
 
 data class ProgramData(
+    val id: Int,
     val name: String,
     val code: String
 )
